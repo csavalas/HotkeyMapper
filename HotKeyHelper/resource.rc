@@ -1,0 +1,11 @@
+#include "resource.h"
+
+DLG_MAIN DIALOGEX 10000, 10000, 0, 0
+
+FONT 8, "Tahoma" //Font size (8) and type (Tahoma)
+
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP | WS_CHILD
+
+
+BEGIN
+END
