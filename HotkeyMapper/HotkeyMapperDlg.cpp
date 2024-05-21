@@ -336,6 +336,12 @@ HBRUSH CHotkeyMapperDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CHotkeyMapperDlg::OnBnClickedButtonReset()
 {
 	// TODO: Add your control notification handler code here
+	if (MessageBoxA(NULL, "Reset F9-F11 keys to defaults?", "Warning", MB_YESNO) == IDYES) {
+		ClearRegistry("Ex_96");
+		ClearRegistry("Ex_97");
+		ClearRegistry("Ex_98");
+		MessageBoxA(NULL, "Successfully reset to defaults!", "Info", MB_OK);
+	}
 }
 
 

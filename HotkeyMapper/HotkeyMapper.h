@@ -9,7 +9,7 @@
 
 std::string convert_cstring(CString s);
 void UpdateRegistry(LPSTR key, std::string file, CString parameters, CString helper_prefix);
-
+void ClearRegistry(LPSTR key);
 #ifndef __AFXWIN_H__
 	#error "include 'pch.h' before including this file for PCH"
 #endif
