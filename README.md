@@ -2,4 +2,5 @@
 Hotkey Mapper for Lenovo Thinkpads
 
 ## Features
-![alt text](https://raw.githubusercontent.com/csavalas/HotkeyMapper/main/screens/main.jpg)
+<img src="[drawing.jpg](https://github.com/csavalas/HotkeyMapper/blob/main/main.jpg?raw=true)" alt="drawing" width="200"/>
+![alt text](https://github.com/csavalas/HotkeyMapper/blob/main/main.jpg?raw=true)
