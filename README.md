@@ -11,7 +11,7 @@ Provides Vantage-like F12 customization options for the F9-F11 keys.
 * Opening a file with its default association
 
 ## Installation
-* Download Installer.zip from [here](https://github.com/csavalas/HotkeyMapper/blob/main/Installer.zip?raw=true)
+* Download Installer.zip from [here](https://github.com/csavalas/HotkeyMapper)
   * Unzip the downloaded Installer.zip file
 * Run setup.bat to perform the following actions:
   * Copy HotkeyMapper.exe (frontend GUI) and HotKeyHelper.exe (Backend key emulator) to your local %APPDATA% folder
