@@ -1,4 +1,4 @@
-# HotkeyMapper
+# HotkeyMapper for ThinkPad
 
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/main.jpg?raw=true" alt="main" width="300"/>
 Provides Vantage-like F12 customization options for the F9-F11 keys.
