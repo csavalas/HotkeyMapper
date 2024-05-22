@@ -275,6 +275,7 @@ void CHotkeyMapperDlg::OnClickedButton11App()
 
 void DoKeysModal(LPSTR key, BOOL isCombo) {
 	DialogKeys DlgKeys;
+	DlgKeys.isCombo = isCombo;
 	if (DlgKeys.DoModal() == 1) {
 		UpdateRegistry(
 			key,

@@ -1,5 +1,9 @@
-﻿  Generating code
-  0 of 1461 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+﻿  DialogKeys.cpp
+C:\Users\anon\source\repos\HotkeyMapper\HotkeyMapper\DialogKeys.cpp(417,13): warning C4244: 'argument': conversion from 'WPARAM' to 'int', possible loss of data
+  (compiling source file '/DialogKeys.cpp')
+  
+  Generating code
+  1 of 1465 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

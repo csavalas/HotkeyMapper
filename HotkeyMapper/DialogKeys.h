@@ -1,6 +1,8 @@
 #pragma once
 #include "afxdialogex.h"
-
+#define DETECT_STATE_INACTIVE 0
+#define DETECT_STATE_WAITING 1
+#define DETECT_STATE_CAPTURED 2
 
 // DialogKeys dialog
 
@@ -31,4 +33,11 @@ public:
 	BOOL ValueStealFocus;
 	int lastKey;
 	afx_msg void OnSelchangeComboKeys();
+	CEdit ControlDetect;
+	afx_msg void OnSetfocusEditDetectKey();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	int DetectionState;
+	CString DetectInstructions = L"Click here to detect a key by keystroke...";
+	bool isCombo;
+	afx_msg void OnClickedStealFocus();
 };

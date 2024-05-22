@@ -294,6 +294,7 @@ void DialogKeys::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, ID_KEYS_SELECTED, ValueKeysSelected);
 	DDX_Control(pDX, IDC_COMBO_KEYS, ControlKeys);
 	DDX_Check(pDX, IDC_STEAL_FOCUS, ValueStealFocus);
+	DDX_Control(pDX, IDC_EDIT_DETECT_KEY, ControlDetect);
 }
 
 
@@ -301,6 +302,8 @@ BEGIN_MESSAGE_MAP(DialogKeys, CDialog)
 	ON_BN_CLICKED(ID_APPLY_KEYS, &DialogKeys::OnClickedApplyKeys)
 	ON_BN_CLICKED(IDC_ADD_KEY, &DialogKeys::OnClickedAddKey)
 	ON_CBN_SELCHANGE(IDC_COMBO_KEYS, &DialogKeys::OnSelchangeComboKeys)
+	ON_EN_SETFOCUS(IDC_EDIT_DETECT_KEY, &DialogKeys::OnSetfocusEditDetectKey)
+	ON_BN_CLICKED(IDC_STEAL_FOCUS, &DialogKeys::OnClickedStealFocus)
 END_MESSAGE_MAP()
 
 
@@ -369,7 +372,11 @@ BOOL DialogKeys::OnInitDialog()
 	}
 	m_font.CreatePointFont(75, L"Courier New Bold");
 	ControlKeys.SetFont(&m_font);
-	ValueStealFocus = TRUE;
+	ControlKeys.SetCueBanner(L"Select a key from the dropdown...");
+	ControlDetect.SetWindowTextW(DetectInstructions);
+	DetectionState = DETECT_STATE_INACTIVE;
+	ValueStealFocus = isCombo;
+	SetWindowText(isCombo ? L"Key Combination": L"Key Sequence");
 	UpdateData(FALSE);
 	lastKey = -1;
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -381,4 +388,47 @@ void DialogKeys::OnSelchangeComboKeys()
 {
 	// TODO: Add your control notification handler code here
 	UpdateData(TRUE);
+}
+
+
+void DialogKeys::OnSetfocusEditDetectKey()
+{
+	// TODO: Add your control notification handler code here
+	DetectionState = DETECT_STATE_WAITING;
+	ControlDetect.SetWindowTextW(L"------WAITING TO DETECT KEYPRESS------");
+}
+
+
+BOOL DialogKeys::PreTranslateMessage(MSG* pMsg)
+{
+
+
+	// TODO: Add your specialized code here and/or call the base class
+	if (
+		DetectionState == DETECT_STATE_WAITING
+		&& (pMsg->message == WM_KEYDOWN || pMsg->message == WM_SYSKEYDOWN)
+	) {
+		DetectionState = DETECT_STATE_INACTIVE;
+		//pMsg->message = WM_SETFOCUS;
+		//pMsg->hwnd = HWND(GetDlgItem(ID_APPLY_KEYS));
+		GetDlgItem(ID_KEYS_SELECTED)->SetFocus();
+		ControlDetect.SetWindowTextW(DetectInstructions);
+		char str[3];
+		_itoa(pMsg->wParam, str, 16);
+		ValueKeysSelected = ValueKeysSelected + L" 0x" + CString(str);
+		UpdateData(FALSE);
+		return TRUE;
+	}
+
+	return CDialog::PreTranslateMessage(pMsg);
+}
+
+
+
+
+
+void DialogKeys::OnClickedStealFocus()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
 }
