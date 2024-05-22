@@ -23,24 +23,33 @@ Provides Vantage-like F12 customization options for the F9-F11 keys.
 
 ## Various options
 ### Emulating a Key Sequence (_eg. 'hi!'_)
-<img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/key1.jpg?raw=true" alt="key1" width="300"/>
+<img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/keyseq.jpg?raw=true" alt="key1" width="300"/>
 
+#### Option 1
 1. Select `Key Sequence` from the main window under the desired key section (`F9`-`F11`)
-2. Select `H` from the dropdown menu, then click `Add key`
-    * Repeat step 2 for `i` and `!`
-3. `Steal Focus`
+2. Adding keys
+    * Option 1:
+        * Select `H` from the dropdown menu, then click `Add key`
+    * Option 2:
+        * Click into the `...key by kestroke...` box, tap the `H` key, and it will be automatically added
+    * Repeat whichever option you chose for `i` and `!`
+3. `Steal Focus` _(`OFF` by default for key sequences)_
     * Check this box if you do _NOT_ want the focused application to receive your key sequence
     * Uncheck this box if you _DO_ want the focused application to receive your key sequence
         * In this example (_hi!_), you would likely want to uncheck this box so the focused app receives the input (_eg. email client_)
 4. Press the `Apply` key.
 
 ### Emulating a Key Combination (_eg. [CTRL] + [SHIFT] + 9_)
-<img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/key1.jpg?raw=true" alt="key1" width="300"/>
+<img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/keycombo.jpg?raw=true" alt="key1" width="300"/>
 
 1. Select `Key Combination` from the main window under the desired key section (`F9`-`F11`)
-2. Select `CTRL` from the dropdown menu, then click `Add key`
-    * Repeat step 2 for `SHIFT` and `9`
-3. `Steal Focus`
+2. Adding keys
+    * Option 1:
+        * Select `CTRL` from the dropdown menu, then click `Add key`
+    * Option 2:
+        * Click into the `...key by kestroke...` box, tap the `CTRL` key, and it will be automatically added
+    * Repeat whichever option you chose for `SHIFT` and `9`
+3. `Steal Focus` _(`ON` by default for key combos)_
     * Check this box if you do _NOT_ want the focused application to receive your key sequence
         * In this example (_[CTRL] + [SHIFT] + 9_), you would likely want to check this box unless your key combo is specific to the focused app
     * Uncheck this box if you _DO_ want the focused application to receive your key sequence
