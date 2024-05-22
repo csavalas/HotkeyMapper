@@ -4,10 +4,11 @@
 Provides Vantage-like F12 customization options for the F9-F11 keys.
 
 ## Features
-* Full key sequences or combinations (eg. "hello world", vs CTRL + SHIFT + 9)
-* Open any app (option to specify command line arguments for said app)
-* Open a URL
-* Open a file
+* Emulating a single key (eg. _Play/Pause_ key)
+* Emulating full key sequences or combinations (eg. _hello world_, vs _CTRL + SHIFT + 9_)
+* Opening any app (option to specify command line arguments for said app)
+* Opening a URL
+* Opening a file with its default association
 
 ## Installation
 * Download Installer.zip from [here](https://github.com/csavalas/HotkeyMapper/blob/main/Installer.zip?raw=true)
