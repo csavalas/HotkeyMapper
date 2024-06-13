@@ -2,7 +2,7 @@
 
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/main.jpg?raw=true" alt="main" width="300"/>
 
-Provides Vantage-like F12 customization options for the F9-F11 keys.
+Provides Vantage-like F12 customization options for the `F4`-`F11` keys.
 
 ## Features
 * Emulating a single key (eg. _Play/Pause_ key)
@@ -26,7 +26,7 @@ Provides Vantage-like F12 customization options for the F9-F11 keys.
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/keyseq.jpg?raw=true" alt="key1" width="300"/>
 
 #### Option 1
-1. Select `Key Sequence` from the main window under the desired key section (`F9`-`F11`)
+1. Select `Key Sequence` from the main window
 2. Adding keys
     * Option 1:
         * Select `H` from the dropdown menu, then click `Add key`
@@ -42,7 +42,7 @@ Provides Vantage-like F12 customization options for the F9-F11 keys.
 ### Emulating a Key Combination (_eg. [CTRL] + [SHIFT] + 9_)
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/keycombo.jpg?raw=true" alt="key1" width="300"/>
 
-1. Select `Key Combination` from the main window under the desired key section (`F9`-`F11`)
+1. Select `Key Combination` from the main window
 2. Adding keys
     * Option 1:
         * Select `CTRL` from the dropdown menu, then click `Add key`
@@ -58,7 +58,7 @@ Provides Vantage-like F12 customization options for the F9-F11 keys.
 ### Opening an app (_eg. chrome.exe --app=http://google.com_)
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/app.jpg?raw=true" alt="app" width="300"/>
 
-1. Select `Open App` from the main window under the desired key section (`F9`-`F11`)
+1. Select `Open App` from the main window
 2. Select `Browse` to navigate to and select your executable file, in this case `chrome.exe`
 3. _Optional_ Enter in any command lin arguments for your app, in this example: `--app=http://google.com`
 4. Press the `Apply` key.
@@ -66,14 +66,14 @@ Provides Vantage-like F12 customization options for the F9-F11 keys.
 ### Opening a URL (_eg. https://ebaumsworld.com_)
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/url.jpg?raw=true" alt="app" width="300"/>
 
-1. Select `Open URL` from the main window under the desired key section (`F9`-`F11`)
+1. Select `Open URL` from the main window
 2. Enter in the desired URL, in this case `https://ebaumsworld.com`
 3. Press the `Apply` key.
 
 ### Opening a file (_eg. some_text_file.txt_)
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/file.jpg?raw=true" alt="app" width="300"/>
 
-1. Select `Open File` from the main window under the desired key section (`F9`-`F11`)
+1. Select `Open File` from the main window
 2. Select `Browse` to navigate to and select your file, in this case `some_text_file.txt`
 3. Press the `Apply` key.
 
