@@ -330,6 +330,7 @@ void CHotkeyMapperDlg::OnSelchangeComboFKeySelect()
 {
 	UpdateData(TRUE);
 	if (ControlFKeySelect.GetCurSel() > -1) {
+		GetDlgItem(IDC_GROUP_OPS)->SetWindowTextW(FKeys[ControlFKeySelect.GetCurSel()][0] + CString(" customization options:"));
 		if (ControlFKeySelect.GetCurSel() == 1
 		|| ControlFKeySelect.GetCurSel() == 2) {
 			GetDlgItem(IDC_BETA_WARNING)->ShowWindow(SW_SHOW);
