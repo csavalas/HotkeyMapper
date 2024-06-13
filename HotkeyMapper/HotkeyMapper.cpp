@@ -16,12 +16,12 @@ std::string convert_cstring(CString s) {
 	return std::string(ws.begin(), ws.end());
 }
 
-void UpdateRegistry(LPSTR key, std::string file, CString parameters, CString helper_prefix) {
+void UpdateRegistry(CString key, std::string file, CString parameters, CString helper_prefix) {
 	//std::wstring ws = std::wstring(parameters.GetString());
 	//std::string parameters_string = std::string(ws.begin(), ws.end());
 	std::string parameters_string = convert_cstring(parameters);
 	std::string helper_prefix_string = convert_cstring(helper_prefix);
-
+	std::string key_fixed = convert_cstring(key);
 	auto file_formatted =  std::regex_replace(file, std::regex(R"(\\)"), R"(\\)");
 	auto parameters_formatted = std::regex_replace(parameters_string, std::regex(R"(\\)"), R"(\\)");
 
@@ -29,9 +29,9 @@ void UpdateRegistry(LPSTR key, std::string file, CString parameters, CString hel
 	std::ofstream outfile;
 	outfile.open(filename);
 	outfile << "Windows Registry Editor Version 5.00\n\n";
-	outfile << "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Lenovo\\ShortcutKey\\AppLaunch\\" << key << "]\n";
+	outfile << "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Lenovo\\ShortcutKey\\AppLaunch\\" << key_fixed << "]\n";
 	outfile << "\"AppType\"=dword:00000001\n\n";
-	outfile << "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Lenovo\\ShortcutKey\\AppLaunch\\" << key << "\\Desktop]\n";
+	outfile << "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Lenovo\\ShortcutKey\\AppLaunch\\" << key_fixed << "\\Desktop]\n";
 	outfile << "\"File\"=\"" << file_formatted << "\"\n";
 	outfile << "\"Parameters\"=\"" << helper_prefix_string << parameters_formatted << "\"\n\n";
 	outfile << "[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Teams]\n\n";
@@ -40,12 +40,13 @@ void UpdateRegistry(LPSTR key, std::string file, CString parameters, CString hel
 	system((std::string("del ") + std::string(filename)).c_str());
 }
 
-void ClearRegistry(LPSTR key) {
+void ClearRegistry(CString key) {
+	std::string key_fixed = convert_cstring(key);
 	std::string filename = (std::string(std::getenv("USERPROFILE")) + "\\tmp_hotkeymapper.reg").c_str();
 	std::ofstream outfile;
 	outfile.open(filename);
 	outfile << "Windows Registry Editor Version 5.00\n\n";
-	outfile << "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Lenovo\\ShortcutKey\\AppLaunch\\" << key << "]\n\n";
+	outfile << "[-HKEY_LOCAL_MACHINE\\SOFTWARE\\Lenovo\\ShortcutKey\\AppLaunch\\" << key_fixed << "]\n\n";
 	outfile.close();
 	system((std::string("regedit /s ") + std::string(filename)).c_str());
 	system((std::string("del ") + std::string(filename)).c_str());

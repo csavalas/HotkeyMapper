@@ -16,6 +16,26 @@
 #define new DEBUG_NEW
 #endif
 
+#define modelsLength 2
+CString models[modelsLength] = {
+	L"Newer",
+	L"Older",
+};
+
+#define FKeysLength 9
+CString FKeys[FKeysLength][modelsLength + 1] = {
+	{L"F4", L"Ex_1A", L"Ex_1A"},
+	{L"F5", L"Ex_10", L"Ex_10"},
+	{L"F6", L"Ex_0F", L"Ex_0F"},
+	{L"F7", L"7", L"7"},
+	{L"F8", L"5", L"5"},
+	{L"F9", L"Ex_96", L"Ex_1C"},
+	{L"F10", L"Ex_97", L"Ex_93"},
+	{L"F11", L"Ex_98", L"Ex_94"},
+	{L"F12", L"Ex_90", L"Ex_90"},
+};
+
+
 
 // CAboutDlg dialog used for App About
 
@@ -65,29 +85,24 @@ CHotkeyMapperDlg::CHotkeyMapperDlg(CWnd* pParent /*=nullptr*/)
 void CHotkeyMapperDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_COMBO_F_KEY_SELECT, ControlFKeySelect);
+	DDX_Control(pDX, IDC_COMBO_MODEL_SELECT, ControlModelSelect);
 }
 
 BEGIN_MESSAGE_MAP(CHotkeyMapperDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON_9_URL, &CHotkeyMapperDlg::OnClickedButton9Url)
-	ON_BN_CLICKED(IDC_BUTTON_10_URL, &CHotkeyMapperDlg::OnClickedButton10Url)
-	ON_BN_CLICKED(IDC_BUTTON_11_URL, &CHotkeyMapperDlg::OnClickedButton11Url)
-	ON_BN_CLICKED(IDC_BUTTON_9_FILE, &CHotkeyMapperDlg::OnClickedButton9File)
-	ON_BN_CLICKED(IDC_BUTTON_11_FILE, &CHotkeyMapperDlg::OnClickedButton11File)
-	ON_BN_CLICKED(IDC_BUTTON_10_FILE, &CHotkeyMapperDlg::OnClickedButton10File)
-	ON_BN_CLICKED(IDC_BUTTON_9_APP, &CHotkeyMapperDlg::OnClickedButton9App)
-	ON_BN_CLICKED(IDC_BUTTON_10_APP, &CHotkeyMapperDlg::OnClickedButton10App)
-	ON_BN_CLICKED(IDC_BUTTON_11_APP, &CHotkeyMapperDlg::OnClickedButton11App)
-	ON_BN_CLICKED(IDC_BUTTON_9_KEY_SEQ, &CHotkeyMapperDlg::OnClickedButton9KeySeq)
-	ON_BN_CLICKED(IDC_BUTTON_10_KEY_SEQ, &CHotkeyMapperDlg::OnClickedButton10KeySeq)
-	ON_BN_CLICKED(IDC_BUTTON_11_KEY_SEQ, &CHotkeyMapperDlg::OnClickedButton11KeySeq)
-	ON_BN_CLICKED(IDC_BUTTON_9_KEY_COMBO, &CHotkeyMapperDlg::OnClickedButton9KeyCombo)
-	ON_BN_CLICKED(IDC_BUTTON_10_KEY_COMBO, &CHotkeyMapperDlg::OnClickedButton10KeyCombo)
-	ON_BN_CLICKED(IDC_BUTTON_11_KEY_COMBO, &CHotkeyMapperDlg::OnClickedButton11KeyCombo)
+	ON_BN_CLICKED(IDC_BUTTON_URL, &CHotkeyMapperDlg::OnClickedButton9Url)
+	ON_BN_CLICKED(IDC_BUTTON_FILE, &CHotkeyMapperDlg::OnClickedButton9File)
+	ON_BN_CLICKED(IDC_BUTTON_APP, &CHotkeyMapperDlg::OnClickedButton9App)
+	ON_BN_CLICKED(IDC_BUTTON_KEY_SEQ, &CHotkeyMapperDlg::OnClickedButton9KeySeq)
+	ON_BN_CLICKED(IDC_BUTTON_KEY_COMBO, &CHotkeyMapperDlg::OnClickedButton9KeyCombo)
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_BUTTON_RESET, &CHotkeyMapperDlg::OnBnClickedButtonReset)
+	ON_CBN_SELCHANGE(IDC_COMBO_MODEL_SELECT, &CHotkeyMapperDlg::OnSelchangeComboModelSelect)
+	ON_CBN_SELCHANGE(IDC_COMBO_F_KEY_SELECT, &CHotkeyMapperDlg::OnSelchangeComboFKeySelect)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -126,7 +141,20 @@ BOOL CHotkeyMapperDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	m_font.CreatePointFont(75, L"Courier New Bold");
 
+	for (int i = 0; i < modelsLength; i++) {
+		ControlModelSelect.AddString(models[i]);
+	}
+	ControlModelSelect.SetFont(&m_font);
+	ControlModelSelect.SetCueBanner(L"Select a model...");
+
+
+	for (int i = 0; i < FKeysLength; i++) {
+		ControlFKeySelect.AddString(FKeys[i][0]);
+	}
+	ControlFKeySelect.SetFont(&m_font);
+	ControlFKeySelect.SetCueBanner(L"Select an F-key...");
 	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -179,12 +207,27 @@ HCURSOR CHotkeyMapperDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void DoURLModal(LPSTR key) {
+void CHotkeyMapperDlg::OnCancel()
+{
+	//CDialogEx::OnCancel();
+}
+
+void CHotkeyMapperDlg::OnClose()
+{
+	CDialogEx::OnCancel();
+	//CDialogEx::OnClose();
+}
+
+CString CHotkeyMapperDlg::getKeyCode() {
+	return FKeys[ControlFKeySelect.GetCurSel()][ControlModelSelect.GetCurSel() + 1];
+}
+
+void DoURLModal(CString key) {
 	DialogURL DlgURL;
 	if (DlgURL.DoModal() == 1) {
 		UpdateRegistry(
 			key,
-			(LPSTR) (std::string(std::getenv("WINDIR")) + "\\explorer.exe").c_str(),
+			(LPSTR)(std::string(std::getenv("WINDIR")) + "\\explorer.exe").c_str(),
 			DlgURL.ValueURL,
 			CString("")
 		);
@@ -192,26 +235,13 @@ void DoURLModal(LPSTR key) {
 	}
 }
 
-
 void CHotkeyMapperDlg::OnClickedButton9Url()
 {
-	DoURLModal("Ex_96");
+	DoURLModal(getKeyCode());
 }
 
 
-void CHotkeyMapperDlg::OnClickedButton10Url()
-{
-	DoURLModal("Ex_97");
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton11Url()
-{
-	DoURLModal("Ex_98");
-}
-
-
-void DoFileModal(LPSTR key) {
+void DoFileModal(CString key) {
 	DialogFile DlgFile;
 	if (DlgFile.DoModal() == 1) {
 		UpdateRegistry(
@@ -226,23 +256,10 @@ void DoFileModal(LPSTR key) {
 
 void CHotkeyMapperDlg::OnClickedButton9File()
 {
-	DoFileModal("Ex_96");
+	DoFileModal(getKeyCode());
 }
 
-
-void CHotkeyMapperDlg::OnClickedButton10File()
-{
-	DoFileModal("Ex_97");
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton11File()
-{
-	DoFileModal("Ex_98");
-}
-
-
-void DoAppModal(LPSTR key) {
+void DoAppModal(CString key) {
 	DialogApp DlgApp;
 	if (DlgApp.DoModal() == 1) {
 		UpdateRegistry(
@@ -257,23 +274,11 @@ void DoAppModal(LPSTR key) {
 
 void CHotkeyMapperDlg::OnClickedButton9App()
 {
-	DoAppModal("Ex_96");
+	DoAppModal(getKeyCode());
 }
 
 
-void CHotkeyMapperDlg::OnClickedButton10App()
-{
-	DoAppModal("Ex_97");
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton11App()
-{
-	DoAppModal("Ex_98");
-}
-
-
-void DoKeysModal(LPSTR key, BOOL isCombo) {
+void DoKeysModal(CString key, BOOL isCombo) {
 	DialogKeys DlgKeys;
 	DlgKeys.isCombo = isCombo;
 	if (DlgKeys.DoModal() == 1) {
@@ -290,68 +295,56 @@ void DoKeysModal(LPSTR key, BOOL isCombo) {
 
 void CHotkeyMapperDlg::OnClickedButton9KeySeq()
 {
-	DoKeysModal("Ex_96", false);
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton10KeySeq()
-{
-	DoKeysModal("Ex_97", false);
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton11KeySeq()
-{
-	DoKeysModal("Ex_98", false);
+	DoKeysModal(getKeyCode(), false);
 }
 
 
 void CHotkeyMapperDlg::OnClickedButton9KeyCombo()
 {
-	DoKeysModal("Ex_96", true);
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton10KeyCombo()
-{
-	DoKeysModal("Ex_97", true);
-}
-
-
-void CHotkeyMapperDlg::OnClickedButton11KeyCombo()
-{
-	DoKeysModal("Ex_98", true);
-}
-
-
-HBRUSH CHotkeyMapperDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
-{
-	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
-
-	// TODO:  Change any attributes of the DC here
-	return hbr;
+	DoKeysModal(getKeyCode(), true);
 }
 
 
 
 void CHotkeyMapperDlg::OnBnClickedButtonReset()
 {
-	// TODO: Add your control notification handler code here
-	if (MessageBoxA(NULL, "Reset F9-F11 keys to defaults?", "Warning", MB_YESNO) == IDYES) {
-		ClearRegistry("Ex_96");
-		ClearRegistry("Ex_97");
-		ClearRegistry("Ex_98");
-		MessageBoxA(NULL, "Successfully reset to defaults!", "Info", MB_OK);
+	if (MessageBoxA(NULL, "Clear customization?", "Warning", MB_YESNO) == IDYES) {
+		ClearRegistry(getKeyCode());
+		MessageBoxA(NULL, "Successfully cleared!", "Info", MB_OK);
 	}
 }
 
 
-
-BOOL CHotkeyMapperDlg::PreTranslateMessage(MSG* pMsg)
+void CHotkeyMapperDlg::OnSelchangeComboModelSelect()
 {
-	// TODO: Add your specialized code here and/or call the base class
-	//if (pMsg->message == WM_SYSKEYDOWN) {
-	//	OnOK();
-	//}
-	return CDialogEx::PreTranslateMessage(pMsg);
+	UpdateData(TRUE);
+	if (ControlModelSelect.GetCurSel() > -1) {
+		//ControlModelSelect.EnableWindow(false);
+		ControlFKeySelect.EnableWindow(true);
+		//ControlFKeySelect.SetFocus();
+	}
 }
+
+
+void CHotkeyMapperDlg::OnSelchangeComboFKeySelect()
+{
+	UpdateData(TRUE);
+	if (ControlFKeySelect.GetCurSel() > -1) {
+		if (ControlFKeySelect.GetCurSel() == 1
+		|| ControlFKeySelect.GetCurSel() == 2) {
+			GetDlgItem(IDC_BETA_WARNING)->ShowWindow(SW_SHOW);
+		}
+		else {
+			GetDlgItem(IDC_BETA_WARNING)->ShowWindow(SW_HIDE);
+		}
+		GetDlgItem(IDC_BUTTON_URL)->EnableWindow(true);
+		GetDlgItem(IDC_BUTTON_FILE)->EnableWindow(true);
+		GetDlgItem(IDC_BUTTON_APP)->EnableWindow(true);
+		GetDlgItem(IDC_BUTTON_KEY_SEQ)->EnableWindow(true);
+		//GetDlgItem(IDC_BUTTON_KEY_SEQ)->SetFocus();
+		GetDlgItem(IDC_BUTTON_KEY_COMBO)->EnableWindow(true);	
+		GetDlgItem(IDC_BUTTON_RESET)->EnableWindow(true);
+		GetDlgItem(IDC_BUTTON_RESET)->SetWindowTextW(L"Clear customization for " + FKeys[ControlFKeySelect.GetCurSel()][0]);
+	}
+}
+
