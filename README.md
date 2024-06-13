@@ -2,7 +2,7 @@
 
 <img src="https://github.com/csavalas/HotkeyMapper/blob/main/screens/main.jpg?raw=true" alt="main" width="300"/>
 
-Provides Vantage-like F12 customization options for the `F4`-`F11` keys.
+Provides Vantage-like F12 customization options for the `F4`-`F12` keys.
 
 ## Features
 * Emulating a single key (eg. _Play/Pause_ key)
@@ -77,7 +77,7 @@ Provides Vantage-like F12 customization options for the `F4`-`F11` keys.
 2. Select `Browse` to navigate to and select your file, in this case `some_text_file.txt`
 3. Press the `Apply` key.
 
-### Resetting to defaults
+### Clearing customization
 
-1. Select `Reset All to Default` from the main window
+1. Select `Clear customization` from the main window
 2. Press `Yes` in the confirmation dialog.
